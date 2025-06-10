@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<!-- saved from url=(0033)https://oracleauth-98c39.web.app/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OracleAuth</title>
+  <link rel="icon" type="image/png" href="./OracleAuth_files/logo1.png">
+  <script src="./OracleAuth_files/html5-qrcode" type="text/javascript"></script>
+  <script src="./OracleAuth_files/qrcode.min.js.download"></script>
+  <script src="./OracleAuth_files/crypto-js.min.js.download"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+    import { getDatabase, ref, set, child, get } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCY4DiiHh8iiPXJdcUC1pjJHBZsVgtgBJ8",
+      authDomain: "oracle-auth-35a68.firebaseapp.com",
+      projectId: "oracle-auth-35a68",
+      storageBucket: "oracle-auth-35a68.appspot.com",
+      messagingSenderId: "91927544638",
+      appId: "1:91927544638:web:931caf1bc681e2bc5e226f",
+      measurementId: "G-6HFVBG16NH",
+      databaseURL: "https://oracleauth-98c39-default-rtdb.firebaseio.com/"
+
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    window.firebaseDatabase = database;
+    window.firebaseRef = ref;
+    window.firebaseSet = set;
+    window.firebaseGet = get;
+    window.firebaseChild = child;
+  </script>
+  <style>
+    /* Styling stays the same */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f2f4f8;
+      color: #333;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 20px 0;
+      transition: padding 0.3s ease;
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      transition: padding 0.3s ease;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      transition: transform 0.3s ease;
+    }
+
+    .logo img {
+      height: 60px;
+      transition: height 0.3s ease, transform 0.3s ease;
+      border: none;
+      background: none;
+      display: block;
+    }
+
+    .logo.shrink img {
+      height: 40px;
+      transform: scale(0.8);
+    }
+
+    .logo h1 {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-left: 15px;
+      color: #4CAF50;
+      transition: font-size 0.3s ease;
+    }
+
+    .logo.shrink h1 {
+      font-size: 1.2rem;
+    }
+
+    .nav-links a {
+      margin-left: 20px;
+      color: #333;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #4CAF50;
+    }
+
+    .hero {
+      height: 100vh;
+      background: linear-gradient(135deg, #4CAF50, #81C784);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .hero span#typing-text {
+      font-weight: bold;
+      border-right: 2px solid white;
+      padding-right: 4px;
+      color: white; /* Set text color to white */
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      max-width: 800px;
+    }
+
+    .cta-button {
+      background-color: #ffffff;
+      color: #4CAF50;
+      padding: 15px 30px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .cta-button:hover {
+      background-color: #45a049;
+      color: white;
+    }
+
+    .section {
+      padding: 100px 20px;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .section p {
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .cards {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.05);
+      flex: 1 1 300px;
+      max-width: 300px;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+
+    .card p {
+      font-size: 1rem;
+      color: #555;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.05);
+      flex: 1 1 450px;
+      min-width: 300px;
+    }
+
+    h1, h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: #222;
+    }
+
+    input, button {
+      padding: 12px 15px;
+      margin: 10px 0;
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #4CAF50;
+    }
+
+    input.error {
+      border-color: red;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #qrCode {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    #result {
+      font-size: 1rem;
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      border: 1px solid #ddd;
+    }
+
+    #reader {
+      margin-top: 20px;
+      width: 100% !important;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 0.9rem;
+      text-align: left;
+      margin-top: 5px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        padding: 20px;
+      }
+    }
+    /* Styles for Docs Section */
+    .docs-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 40px 20px;
+      margin-top: 60px;
+    }
+
+    .doc-box {
+      background-color: #45a049;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      flex: 1;
+      min-width: 220px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .doc-box:hover {
+      transform: translateY(-10px);
+    }
+
+    .doc-box h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .doc-box p {
+      font-size: 1rem;
+      color: #fdfdfd;
+    }
+
+    @media (max-width: 768px) {
+      .docs-container {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body data-new-gr-c-s-check-loaded="14.1239.0" data-gr-ext-installed="">
+  <header>
+    <nav>
+      <div class="logo" id="logo">
+        <img src="./OracleAuth_files/logo1.png" alt="OracleAuth Logo">
+        <h1>OracleAuth</h1>
+      </div>
+      <div class="nav-links">
+       
+        
+        <a href="https://oracleauth-98c39.web.app/#features">Features</a>
+        <a href="https://oracleauth-98c39.web.app/#docs">Docs</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>
+      <span id="typing-text">Sovereign</span>
+    </h1>
+    <p>Empowering secure, real-time authentication with QR codes.</p>
+    <a href="https://oracleauth-98c39.web.app/#docs" class="cta-button">Get Started</a>
+  </section>
+
+  <section id="features" class="section">
+    <h2>Features</h2>
+    <p>OracleAuth offers the most advanced authentication system, combining security, real-time interaction, and scalability.</p>
+
+    <div class="container">
+      <!-- QR Generator -->
+      <div class="box">
+        <h1>QR Generator</h1>
+        <input type="text" id="name" placeholder="Name">
+        <input type="text" id="uid" placeholder="UID (12 digits)">
+        <input type="date" id="dob" placeholder="Date of Birth">
+        <input type="email" id="email" placeholder="Email">
+        <div id="formError" class="error-message"></div>
+        <button onclick="createQRData()">Generate QR Code</button>
+        <button id="resetBtn" class="hidden" onclick="resetForm()" style="background:#f44336;">Reset Form</button>
+        <div id="qrCode"></div>
+      </div>
+  
+      <!-- QR Scanner -->
+      <div class="box">
+        <h2>QR Scanner</h2>
+        <div id="reader" style="position: relative;"><video muted="true" playsinline="" style="width: 500px; display: block;"></video><canvas id="qr-canvas" width="250" height="250" style="width: 250px; height: 250px; display: none;"></canvas><div id="qr-shaded-region" style="position: absolute; border-width: 62.5px 125px; border-style: solid; border-color: rgba(0, 0, 0, 0.48); box-sizing: border-box; inset: 0px;"><div style="position: absolute; background-color: rgb(255, 255, 255); width: 40px; height: 5px; top: -5px; left: 0px;"></div><div style="position: absolute; background-color: rgb(255, 255, 255); width: 40px; height: 5px; top: -5px; right: 0px;"></div><div style="position: absolute; background-color: rgb(255, 255, 255); width: 40px; height: 5px; bottom: -5px; left: 0px;"></div><div style="position: absolute; background-color: rgb(255, 255, 255); width: 40px; height: 5px; bottom: -5px; right: 0px;"></div><div style="position: absolute; background-color: rgb(255, 255, 255); width: 5px; height: 45px; top: -5px; left: -5px;"></div><div style="position: absolute; background-color: rgb(255, 255, 255); width: 5px; height: 45px; bottom: -5px; left: -5px;"></div><div style="position: absolute; background-color: rgb(255, 255, 255); width: 5px; height: 45px; top: -5px; right: -5px;"></div><div style="position: absolute; background-color: rgb(255, 255, 255); width: 5px; height: 45px; bottom: -5px; right: -5px;"></div></div><div style="display: none; position: absolute; top: 0px; z-index: 1; background: rgba(9, 9, 9, 0.46); color: rgb(255, 236, 236); text-align: center; width: 100%;">Scanner paused</div></div>
+        <button id="scanAgainBtn" class="hidden" onclick="restartScanner()">Scan Again</button>
+        <div id="result"></div>
+      </div>
+    </div>
+  
+    <!-- Scripts -->
+    <script>
+      const resetBtn = document.getElementById("resetBtn");
+      const scanAgainBtn = document.getElementById("scanAgainBtn");
+  
+      function createQRData() {
+        const name = document.getElementById("name");
+        const uid = document.getElementById("uid");
+        const dob = document.getElementById("dob");
+        const email = document.getElementById("email");
+        const formError = document.getElementById("formError");
+  
+        [name, uid, dob, email].forEach(input => input.classList.remove("error"));
+        formError.textContent = "";
+  
+        if (!name.value || !uid.value || !dob.value || !email.value) {
+          formError.textContent = "All fields are required.";
+          [name, uid, dob, email].forEach(input => {
+            if (!input.value) input.classList.add("error");
+          });
+          return;
+        }
+  
+        if (uid.value.length !== 12 || isNaN(uid.value)) {
+          uid.classList.add("error");
+          formError.textContent = "UID must be exactly 12 digits.";
+          return;
+        }
+  
+        const identity = {
+          name: name.value,
+          uid: uid.value,
+          dob: dob.value,
+          email: email.value
+        };
+        const jsonString = JSON.stringify(identity);
+        const hashKey = CryptoJS.SHA256(jsonString).toString();
+  
+        window.firebaseSet(window.firebaseRef(window.firebaseDatabase, "hashkeys/" + hashKey), identity);
+  
+        QRCode.toCanvas(document.createElement("canvas"), hashKey, function (error, canvas) {
+          if (error) console.error(error);
+          const qrDiv = document.getElementById("qrCode");
+          qrDiv.innerHTML = "";
+  
+          const logo = new Image();
+          logo.src = 'logo1.png'; // Path to your logo image
+          logo.onload = () => {
+            const context = canvas.getContext('2d');
+            const logoSize = canvas.width / 4;
+            const logoX = (canvas.width / 2) - (logoSize / 2);
+            const logoY = (canvas.height / 2) - (logoSize / 2);
+            context.drawImage(logo, logoX, logoY, logoSize, logoSize);
+          };
+  
+          qrDiv.appendChild(canvas);
+          resetBtn.classList.remove("hidden");
+        });
+      }
+  
+      function resetForm() {
+        document.getElementById("name").value = "";
+        document.getElementById("uid").value = "";
+        document.getElementById("dob").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("formError").textContent = "";
+        document.getElementById("qrCode").innerHTML = "";
+        ["name", "uid", "dob", "email"].forEach(id => {
+          document.getElementById(id).classList.remove("error");
+        });
+        resetBtn.classList.add("hidden");
+      }
+  
+      function showData(data) {
+        const resultEl = document.getElementById('result');
+        const dbRef = window.firebaseRef(window.firebaseDatabase);
+  
+        window.firebaseGet(window.firebaseChild(dbRef, "hashkeys/" + data)).then((snapshot) => {
+          if (snapshot.exists()) {
+            const parsed = snapshot.val();
+            resultEl.innerHTML = ` 
+              <strong>Name:</strong> ${parsed.name}<br>
+              <strong>UID:</strong> ${parsed.uid}<br>
+              <strong>Date of Birth:</strong> ${parsed.dob}<br>
+              <strong>Email:</strong> ${parsed.email}<br>
+            `;
+            scanAgainBtn.classList.remove("hidden");
+          } else {
+            resultEl.innerHTML = "<strong>Error:</strong> No matching data found.";
+          }
+        });
+      }
+  
+      function onScanSuccess(decodedText, decodedResult) {
+        showData(decodedText);
+      }
+  
+      function restartScanner() {
+        document.getElementById("result").textContent = "";
+        scanAgainBtn.classList.add("hidden");
+        startScanner();
+      }
+  
+      function startScanner() {
+        const html5QrCode = new Html5Qrcode("reader");
+        const config = { fps: 10, qrbox: 250 };
+        html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess);
+      }
+  
+      startScanner();
+  
+      // Typing animation in Hero Section
+      const words = ["Secure", "Sovereign", "Seamless"];
+      let currentWordIndex = 0;
+      const typingElement = document.getElementById("typing-text");
+      let currentCharIndex = 0;
+      let isDeleting = false;
+  
+      function typeWord() {
+        const currentWord = words[currentWordIndex];
+        const currentChar = currentWord.substring(0, currentCharIndex);
+        typingElement.textContent = currentChar;
+  
+        if (isDeleting) {
+          currentCharIndex--;
+        } else {
+          currentCharIndex++;
+        }
+  
+        if (currentCharIndex === currentWord.length + 1) {
+          isDeleting = true;
+          setTimeout(typeWord, 500);
+        } else if (currentCharIndex === 0) {
+          isDeleting = false;
+          currentWordIndex = (currentWordIndex + 1) % words.length;
+          setTimeout(typeWord, 500);
+        } else {
+          setTimeout(typeWord, isDeleting ? 100 : 200);
+        }
+      }
+  
+      // Start typing animation
+      typeWord();
+    </script>
+  </section>
+  <!-- Docs Section -->
+  <section id="docs" class="section">
+    <h2>Documentation</h2>
+    <p>Explore the following documents to get started with OracleAuth:</p>
+    <div class="docs-container">
+      <div class="doc-box">
+        <h3>Getting Started</h3>
+        <p>Learn how to set up OracleAuth and integrate it with your application.</p>
+      </div>
+      <div class="doc-box">
+        <h3>API Reference</h3>
+        <p>Explore the OracleAuth API and its available methods and endpoints.</p>
+      </div>
+      <div class="doc-box">
+        <h3>Security Best Practices</h3>
+        <p>Understand the best practices for keeping your application and data secure with OracleAuth.</p>
+      </div>
+      <div class="doc-box">
+        <h3>Advanced Features</h3>
+        <p>Delve into the advanced features of OracleAuth for building complex authentication systems.</p>
+      </div>
+    </div>
+  </section>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAxEhrojFBS1o7Blfwj9QJFtKcT0ak9SNk",
+      authDomain: "oracleauthv1.firebaseapp.com",
+      projectId: "oracleauthv1",
+      storageBucket: "oracleauthv1.firebasestorage.app",
+      messagingSenderId: "223860661956",
+      appId: "1:223860661956:web:61bba7c3eeb612bb4bf391"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+  </script>
+ 
+
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>
