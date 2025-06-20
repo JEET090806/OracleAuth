@@ -1,12 +1,16 @@
-🛡️ OracleAuth
-OracleAuth is a decentralized, real-time identity verification system built for privacy and speed. It enables users to generate secure QR codes from their personal data (name, UID, DOB, email), which are hashed using SHA-256 and stored in Firebase. These QR codes can then be scanned by authorized personnel to retrieve and verify user data — securely and instantly.
+# 🛡️ **OracleAuth**
 
-🔗 Live Demo: oracleauth-98c39.web.app
+**OracleAuth** is a **decentralized, real-time identity verification system** built for privacy, speed, and security. It allows users to generate secure QR codes from personal data (Name, UID, DOB, Email), hashed using **SHA-256** and stored securely in **Firebase**.
 
-🧠 How It Works
-css
-Copy
-Edit
+These QR codes can then be scanned by **authorized personnel** to instantly retrieve and verify the associated identity — without ever exposing raw data.
+
+> 🔗 **Live Demo**: [oracleauth-98c39.web.app](https://oracleauth-98c39.web.app)
+
+---
+
+## 🧠 **How It Works**
+
+```text
 ┌──────────────┐    ┌────────────────┐    ┌───────────────┐
 │ User Input   │ ─▶│ SHA-256 Hash   │ ─▶ │ QR Code Gen   │
 └──────────────┘    └────────────────┘    └───────────────┘
@@ -14,63 +18,79 @@ Edit
 ┌──────────────┐    ┌────────────────┐    ┌───────────────┐
 │ Verification │ ◀─│ QR Extraction  │ ◀─ │ QR Scanner    │
 └──────────────┘    └────────────────┘    └───────────────┘
-The QR code contains only the hash — not personal data — and only your internal Firebase database can resolve that hash back to user info.
+```
 
-🔧 Tech Stack
-Component	Tech Used
-Frontend	HTML, CSS, JavaScript
-QR Generation	qrcode.min.js
-QR Scanning	html5-qrcode (webcam-based scanning)
-Hashing Algorithm	crypto-js (SHA-256)
-Realtime Database	Firebase Realtime Database
-Hosting	Firebase Hosting
+✅ The QR code contains **only the hashed data** — not the original information.  
+🔒 The hash is looked up in the **Firebase Realtime Database** to verify the identity.  
+🚫 If an unauthorized user scans the QR, they will see **only the hash**, which is not reversible.
 
-✨ Features
-🔐 SHA-256 encryption of sensitive data before QR generation
+---
 
-📷 QR scanning via device webcam with live data retrieval
+## 🔧 **Tech Stack**
 
-⚡ Instant lookup from Firebase using hashed key
+| **Component**        | **Technology**                             |
+|----------------------|---------------------------------------------|
+| 🖥️ Frontend           | HTML, CSS, JavaScript                      |
+| 🔐 QR Generation      | `qrcode.min.js`                            |
+| 📷 QR Scanning        | `html5-qrcode` (webcam-based scanning)     |
+| 🧮 Hashing Algorithm  | `crypto-js` (SHA-256)                      |
+| 🗃️ Database           | Firebase Realtime Database                 |
+| ☁️ Hosting            | Firebase Hosting                          |
 
-🛡️ Hash-only QR content: no personal data embedded in the QR
+---
 
-🌐 Firebase-based hosting & database for fast and secure access
+## ✨ **Features**
 
-🔐 Security & Privacy
-All user data is hashed before storage.
+- 🔐 **SHA-256 encryption** of all sensitive identity data  
+- 📷 **Webcam-based QR scanning** for real-time identity lookup  
+- ⚡ **Instant verification** using Firebase’s fast, cloud-based backend  
+- 🧾 **No personal data stored in the QR code** — only the hash  
+- 🌐 **Firebase-powered** architecture for speed, scale, and security  
 
-QR codes expose nothing except the SHA-256 hash.
+---
 
-Only authorized systems connected to Firebase can query records.
+## 🔐 **Security & Privacy**
 
-Hashes are non-reversible, even if intercepted.
+✔️ **One-way encryption** — hashes are irreversible  
+✔️ **QR codes contain only hashes**, no raw PII  
+✔️ **Only trusted systems** can access user data via Firebase  
+✔️ **No centralized identity leak risk** — everything is isolated, hashed, and controlled
 
-📚 Documentation
-OracleAuth's documentation is built into the interface. Key areas include:
+---
 
-✅ Getting Started — Using the QR generator and scanner
+## 📚 **Documentation**
 
-🔌 API Reference — Firebase structure and hash key logic
+You’ll find all documentation within the interface under the **Docs** section. Key areas include:
 
-🔐 Security Best Practices — Keeping identities safe
+- ✅ **Getting Started** – How to use the QR generator & scanner  
+- 🔌 **API Reference** – Firebase structure and access logic  
+- 🔐 **Security Best Practices** – Guidance for safe implementation  
+- ⚙️ **Advanced Features** – For developers and enterprise use  
 
-⚙️ Advanced Features — Extend OracleAuth for broader use cases
+👉 Explore it at: [oracleauth-98c39.web.app/#docs](https://oracleauth-98c39.web.app/#docs)
 
-You can explore the documentation directly on the OracleAuth Website.
+---
 
-📌 Future Enhancements
-🔗 Blockchain integration for tamper-proof verification logs
+## 🚀 **Future Enhancements**
 
-📱 Native mobile app support for scanning and verifying on the go
+- 🔗 **Blockchain integration** for tamper-proof logs  
+- 📱 **Mobile app** (Android/iOS) for on-the-go scanning  
+- 🧠 **Fraud alerts** via duplicate detection and pattern matching  
+- 🧩 **Role-based access control** for admin, verifier, etc.
 
-🧠 Smart alerts for fraudulent or duplicate entries
+---
 
-🧩 Role-based access for scan permissions
+## 📄 **License**
 
-📄 License
-This project is licensed under the MIT License.
+Licensed under the **MIT License** — free to use, share, and modify.
 
-🙋 Support
-For issues, improvements, or contributions, visit the repo:
-👉 github.com/JEET090806/OracleAuth
- 
+---
+
+## 🙋 **Support & Contributions**
+
+Have an idea, bug, or question?
+
+- 📂 Contact me :
+    jeetpandya2006@gmail.com
+
+---
