@@ -91,7 +91,8 @@ Licensed under the **MIT License** — free to use, share, and modify.
 Have an idea, bug, or question?
 
 - 📂 Contact :
-    jeetpandya2006@gmail.com
+- kp197525006@gmail.com     jeetpandya2006@gmail.com
     tanikshashah2409@gmail.com
+  
 
 ---
