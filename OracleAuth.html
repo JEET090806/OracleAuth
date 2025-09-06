@@ -12,26 +12,30 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
     import { getDatabase, ref, set, child, get } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyCY4DiiHh8iiPXJdcUC1pjJHBZsVgtgBJ8",
-      authDomain: "oracle-auth-35a68.firebaseapp.com",
-      projectId: "oracle-auth-35a68",
-      storageBucket: "oracle-auth-35a68.appspot.com",
-      messagingSenderId: "91927544638",
-      appId: "1:91927544638:web:931caf1bc681e2bc5e226f",
-      measurementId: "G-6HFVBG16NH",
-      databaseURL: "https://oracleauth-98c39-default-rtdb.firebaseio.com/"
+    fetch('.env')
+      .then(response => response.text())
+      .then(text => {
+        const env = Object.fromEntries(text.split('\n').map(line => line.split('=')));
+        const firebaseConfig = {
+          apiKey: env.FIREBASE_API_KEY,
+          authDomain: env.FIREBASE_AUTH_DOMAIN,
+          projectId: env.FIREBASE_PROJECT_ID,
+          storageBucket: env.FIREBASE_STORAGE_BUCKET,
+          messagingSenderId: env.FIREBASE_MESSAGING_SENDER_ID,
+          appId: env.FIREBASE_APP_ID,
+          measurementId: env.FIREBASE_MEASUREMENT_ID,
+          databaseURL: env.FIREBASE_DATABASE_URL
+        };
 
-    };
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
 
-    const app = initializeApp(firebaseConfig);
-    const database = getDatabase(app);
-
-    window.firebaseDatabase = database;
-    window.firebaseRef = ref;
-    window.firebaseSet = set;
-    window.firebaseGet = get;
-    window.firebaseChild = child;
+        window.firebaseDatabase = database;
+        window.firebaseRef = ref;
+        window.firebaseSet = set;
+        window.firebaseGet = get;
+        window.firebaseChild = child;
+      });
   </script>
   <style>
     /* Styling stays the same */
@@ -570,25 +574,7 @@
       </div>
     </div>
   </section>
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
   
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyAxEhrojFBS1o7Blfwj9QJFtKcT0ak9SNk",
-      authDomain: "oracleauthv1.firebaseapp.com",
-      projectId: "oracleauthv1",
-      storageBucket: "oracleauthv1.firebasestorage.app",
-      messagingSenderId: "223860661956",
-      appId: "1:223860661956:web:61bba7c3eeb612bb4bf391"
-    };
-  
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-  </script>
  
 
 
